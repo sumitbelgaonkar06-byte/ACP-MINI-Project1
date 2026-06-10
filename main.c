@@ -197,3 +197,50 @@ void modifyRectangle(
         }
     }
 }
+
+
+void redraw()
+{
+    clearCanvas();
+
+    for(int i = 0; i < count; i++)
+    {
+        Shape *s = &objects[i];
+
+        switch(s->type)
+        {
+            case LINE:
+                drawLine(
+                    s->line.x1,
+                    s->line.y1,
+                    s->line.x2,
+                    s->line.y2);
+                break;
+
+            case RECTANGLE:
+                drawRectangle(
+                    s->rect.x,
+                    s->rect.y,
+                    s->rect.width,
+                    s->rect.height);
+                break;
+
+            case CIRCLE:
+                drawCircle(
+                    s->circle.xc,
+                    s->circle.yc,
+                    s->circle.radius);
+                break;
+
+            case TRIANGLE:
+                drawTriangle(
+                    s->triangle.x1,
+                    s->triangle.y1,
+                    s->triangle.x2,
+                    s->triangle.y2,
+                    s->triangle.x3,
+                    s->triangle.y3);
+                break;
+        }
+    }
+}
