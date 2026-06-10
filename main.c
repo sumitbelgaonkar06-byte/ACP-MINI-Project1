@@ -82,3 +82,70 @@ void drawLine(int x1, int y1, int x2, int y2)
         }
     }
 }
+
+void drawRectangle(int x, int y, int width, int height)
+{
+    drawLine(x, y, x + width, y);
+
+    drawLine(x, y,
+             x, y + height);
+
+    drawLine(x + width, y,
+             x + width, y + height);
+
+    drawLine(x, y + height,
+             x + width, y + height);
+}
+
+
+void drawCircle(int xc, int yc, int r)
+{
+    int x = 0;
+    int y = r;
+    int d = 1 - r;
+
+    while(x <= y)
+    {
+        setPixel(xc + x, yc + y);
+        setPixel(xc - x, yc + y);
+        setPixel(xc + x, yc - y);
+        setPixel(xc - x, yc - y);
+
+        setPixel(xc + y, yc + x);
+        setPixel(xc - y, yc + x);
+        setPixel(xc + y, yc - x);
+        setPixel(xc - y, yc - x);
+
+        if(d < 0)
+            d += 2*x + 3;
+        else
+        {
+            d += 2*(x-y) + 5;
+            y--;
+        }
+        x++;
+    }
+}
+
+
+void drawTriangle(
+    int x1, int y1,
+    int x2, int y2,
+    int x3, int y3)
+{
+    drawLine(x1,y1,x2,y2);
+    drawLine(x2,y2,x3,y3);
+    drawLine(x3,y3,x1,y1);
+}
+
+
+void displayCanvas()
+{
+    for(int i = 0; i < ROWS; i++)
+    {
+        for(int j = 0; j < COLS; j++)
+            printf("%c", canvas[i][j]);
+
+        printf("\n");
+    }
+}
