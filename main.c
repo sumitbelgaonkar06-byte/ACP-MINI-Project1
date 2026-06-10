@@ -31,6 +31,44 @@ typedef struct {
 char canvas[ROWS][COLS];
 
 
+int main()
+{
+    Shape r, c;
+
+    r.type = RECTANGLE;
+    r.id = 1;
+    r.rect.x = 5;
+    r.rect.y = 5;
+    r.rect.width = 20;
+    r.rect.height = 10;
+
+    c.type = CIRCLE;
+    c.id = 2;
+    c.circle.xc = 40;
+    c.circle.yc = 15;
+    c.circle.radius = 8;
+
+    addObject(r);
+    addObject(c);
+
+    printf("Original Picture:\n");
+    redraw();
+    displayCanvas();
+
+    printf("\n\nAfter Modifying Rectangle:\n");
+    modifyRectangle(1, 10, 10, 15, 8);
+    redraw();
+    displayCanvas();
+
+    printf("\n\nAfter Deleting Circle:\n");
+    deleteObject(2);
+    redraw();
+    displayCanvas();
+
+    return 0;
+}
+
+
 void clearCanvas()
 {
     for(int i = 0; i < ROWS; i++)
@@ -244,3 +282,4 @@ void redraw()
         }
     }
 }
+
