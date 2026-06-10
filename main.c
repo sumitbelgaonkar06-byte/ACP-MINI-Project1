@@ -1,3 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+
+
+
 typedef enum {
     LINE,
     RECTANGLE,
@@ -29,41 +36,111 @@ typedef struct {
 #define COLS 80
 
 char canvas[ROWS][COLS];
+void clearCanvas();
+void setPixel(int x, int y);
+void drawLine(int x1, int y1, int x2, int y2);
+void drawRectangle(int x, int y, int width, int height);
+void drawCircle(int xc, int yc, int r);
+void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3);
+void displayCanvas();
+void addObject(Shape s);
+void deleteObject(int id);
+void modifyRectangle(int id, int x, int y, int w, int h);
+void redraw();
 
 
 int main()
 {
-    Shape r, c;
+    int choice;
+    Shape s;
+    int id;
 
-    r.type = RECTANGLE;
-    r.id = 1;
-    r.rect.x = 5;
-    r.rect.y = 5;
-    r.rect.width = 20;
-    r.rect.height = 10;
+    do
+    {
+        printf("\n===== 2D GRAPHICS EDITOR =====\n");
+        printf("1. Add Rectangle\n");
+        printf("2. Add Circle\n");
+        printf("3. Display Picture\n");
+        printf("4. Modify Rectangle\n");
+        printf("5. Delete Object\n");
+        printf("6. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
 
-    c.type = CIRCLE;
-    c.id = 2;
-    c.circle.xc = 40;
-    c.circle.yc = 15;
-    c.circle.radius = 8;
+        switch(choice)
+        {
+            case 1:
+                s.type = RECTANGLE;
 
-    addObject(r);
-    addObject(c);
+                printf("Enter ID: ");
+                scanf("%d", &s.id);
 
-    printf("Original Picture:\n");
-    redraw();
-    displayCanvas();
+                printf("Enter x y width height: ");
+                scanf("%d%d%d%d",
+                      &s.rect.x,
+                      &s.rect.y,
+                      &s.rect.width,
+                      &s.rect.height);
 
-    printf("\n\nAfter Modifying Rectangle:\n");
-    modifyRectangle(1, 10, 10, 15, 8);
-    redraw();
-    displayCanvas();
+                addObject(s);
+                break;
 
-    printf("\n\nAfter Deleting Circle:\n");
-    deleteObject(2);
-    redraw();
-    displayCanvas();
+            case 2:
+                s.type = CIRCLE;
+
+                printf("Enter ID: ");
+                scanf("%d", &s.id);
+
+                printf("Enter center x center y radius: ");
+                scanf("%d%d%d",
+                      &s.circle.xc,
+                      &s.circle.yc,
+                      &s.circle.radius);
+
+                addObject(s);
+                break;
+
+            case 3:
+                redraw();
+                displayCanvas();
+                break;
+
+            case 4:
+            {
+                int x,y,w,h;
+
+                printf("Enter Rectangle ID: ");
+                scanf("%d",&id);
+
+                printf("Enter new x y width height: ");
+                scanf("%d%d%d%d",&x,&y,&w,&h);
+
+                modifyRectangle(id,x,y,w,h);
+
+                redraw();
+                displayCanvas();
+                break;
+            }
+
+            case 5:
+                printf("Enter ID to delete: ");
+                scanf("%d",&id);
+
+                deleteObject(id);
+
+                redraw();
+                displayCanvas();
+                break;
+
+            case 6:
+                printf("Exiting...\n");
+                break;
+
+            default:
+                printf("Invalid Choice!\n");
+        }
+
+    } while(choice != 6);
 
     return 0;
 }
