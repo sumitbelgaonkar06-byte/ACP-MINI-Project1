@@ -149,3 +149,51 @@ void displayCanvas()
         printf("\n");
     }
 }
+
+#define MAX_OBJECTS 100
+
+Shape objects[MAX_OBJECTS];
+int count = 0;
+
+void addObject(Shape s)
+{
+    if(count < MAX_OBJECTS)
+        objects[count++] = s;
+}
+
+void deleteObject(int id)
+{
+    for(int i = 0; i < count; i++)
+    {
+        if(objects[i].id == id)
+        {
+            for(int j = i; j < count-1; j++)
+                objects[j] = objects[j+1];
+
+            count--;
+            break;
+        }
+    }
+}
+
+
+
+void modifyRectangle(
+    int id,
+    int x,
+    int y,
+    int w,
+    int h)
+{
+    for(int i = 0; i < count; i++)
+    {
+        if(objects[i].id == id &&
+           objects[i].type == RECTANGLE)
+        {
+            objects[i].rect.x = x;
+            objects[i].rect.y = y;
+            objects[i].rect.width = w;
+            objects[i].rect.height = h;
+        }
+    }
+}
